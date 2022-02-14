@@ -184,7 +184,7 @@ steps:
 
   - script: |
       set -e
-      ./scripts/test.sh --build --tfs "Unit Tests"
+      ./scripts/test.sh --help
     displayName: Run unit tests (Electron)
     timeoutInMinutes: 15
     condition: and(succeeded(), eq(variables['VSCODE_ARCH'], 'x64'), eq(variables['VSCODE_STEP_ON_IT'], 'false'))
