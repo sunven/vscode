@@ -41,5 +41,6 @@ process.on('unhandledRejection', (reason, p) => {
 });
 
 // Load all the gulpfiles only if running tasks other than the editor tasks
+// 仅当运行除编辑器任务以外的任务时，才加载所有GulpFile
 require('glob').sync('gulpfile.*.js', { cwd: __dirname })
 	.forEach(f => require(`./${f}`));

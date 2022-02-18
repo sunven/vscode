@@ -522,6 +522,8 @@ export abstract class AbstractExtensionService extends Disposable implements IEx
 
 		const lock = await this._registryLock.acquire('_initialize');
 		try {
+			// 扫描扩展
+			// web 和 election进入的不一样
 			await this._scanAndHandleExtensions();
 		} finally {
 			lock.dispose();
@@ -1015,7 +1017,7 @@ export abstract class AbstractExtensionService extends Disposable implements IEx
 
 	protected async _scanWebExtensions(): Promise<IExtensionDescription[]> {
 		const log = this.createLogger();
-		const system: IExtensionDescription[] = [], user: IExtensionDescription[] = [], development: IExtensionDescription[] = [];
+		let system: IExtensionDescription[] = [], user: IExtensionDescription[] = [], development: IExtensionDescription[] = [];
 		try {
 			await Promise.all([
 				this._webExtensionsScannerService.scanSystemExtensions().then(extensions => system.push(...extensions.map(e => toExtensionDescription(e)))),

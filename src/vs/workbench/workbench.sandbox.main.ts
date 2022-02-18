@@ -117,7 +117,7 @@ import 'vs/workbench/contrib/extensions/electron-sandbox/extensions.contribution
 import 'vs/workbench/contrib/issue/electron-sandbox/issue.contribution';
 
 // Remote
-import 'vs/workbench/contrib/remote/electron-sandbox/remote.contribution';
+// import 'vs/workbench/contrib/remote/electron-sandbox/remote.contribution';
 
 // Configuration Exporter
 import 'vs/workbench/contrib/configExporter/electron-sandbox/configurationExportHelper.contribution';

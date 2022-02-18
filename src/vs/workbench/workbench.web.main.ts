@@ -110,7 +110,7 @@ registerSingleton(ICustomEndpointTelemetryService, NullEndpointTelemetryService,
 //#region --- workbench contributions
 
 // Output
-import 'vs/workbench/contrib/output/common/outputChannelModelService';
+// import 'vs/workbench/contrib/output/common/outputChannelModelService';
 
 // Explorer
 import 'vs/workbench/contrib/files/browser/files.web.contribution';
@@ -131,12 +131,14 @@ import 'vs/workbench/contrib/welcomeBanner/browser/welcomeBanner.contribution';
 import 'vs/workbench/contrib/webview/browser/webview.web.contribution';
 
 // Extensions Management
-import 'vs/workbench/contrib/extensions/browser/extensions.web.contribution';
+// import 'vs/workbench/contrib/extensions/browser/extensions.web.contribution';
 
 // Terminal
-import 'vs/workbench/contrib/terminal/browser/terminal.web.contribution';
-import 'vs/workbench/contrib/externalTerminal/browser/externalTerminal.contribution';
-import 'vs/workbench/contrib/terminal/browser/terminalInstanceService';
+registerSingleton(ITerminalProfileResolverService, BrowserTerminalProfileResolverService, true);
+// import 'vs/workbench/contrib/terminal/browser/terminal.web.contribution';
+// import 'vs/workbench/contrib/externalTerminal/browser/externalTerminal.contribution';
+registerSingleton(ITerminalInstanceService, TerminalInstanceService, true);
+// import 'vs/workbench/contrib/terminal/browser/terminalInstanceService';
 
 // Tasks
 import 'vs/workbench/contrib/tasks/browser/taskService';
@@ -180,6 +182,10 @@ import type { IURLCallbackProvider } from 'vs/workbench/services/url/browser/url
 import type { IUpdateProvider, IUpdate } from 'vs/workbench/services/update/browser/updateService';
 // eslint-disable-next-line no-duplicate-imports
 import type { IWorkspace, IWorkspaceProvider } from 'vs/workbench/services/host/browser/browserHostService';
+import { ITerminalProfileResolverService } from 'vs/workbench/contrib/terminal/common/terminal';
+import { BrowserTerminalProfileResolverService } from 'vs/workbench/contrib/terminal/browser/terminalProfileResolverService';
+import { ITerminalInstanceService } from 'vs/workbench/contrib/terminal/browser/terminal';
+import { TerminalInstanceService } from 'vs/workbench/contrib/terminal/browser/terminalInstanceService';
 
 export {
 

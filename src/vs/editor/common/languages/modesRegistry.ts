@@ -54,6 +54,7 @@ Registry.add(Extensions.ModesRegistry, ModesRegistry);
 export const PLAINTEXT_LANGUAGE_ID = 'plaintext';
 export const PLAINTEXT_EXTENSION = '.txt';
 
+// 注册plaintext
 ModesRegistry.registerLanguage({
 	id: PLAINTEXT_LANGUAGE_ID,
 	extensions: [PLAINTEXT_EXTENSION],

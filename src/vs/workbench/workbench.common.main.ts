@@ -3,6 +3,30 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
+
+import { IExtensionsWorkbenchService } from 'vs/workbench/contrib/extensions/common/extensions';
+import { ExtensionsWorkbenchService } from 'vs/workbench/contrib/extensions/browser/extensionsWorkbenchService';
+import { IExtensionRecommendationNotificationService } from 'vs/platform/extensionRecommendations/common/extensionRecommendations';
+import { ExtensionRecommendationNotificationService } from 'vs/workbench/contrib/extensions/browser/extensionRecommendationNotificationService';
+import { IExtensionRecommendationsService } from 'vs/workbench/services/extensionRecommendations/common/extensionRecommendations';
+import { ExtensionRecommendationsService } from 'vs/workbench/contrib/extensions/browser/extensionRecommendationsService';
+import { ISCMService, ISCMViewService } from 'vs/workbench/contrib/scm/common/scm';
+import { SCMService } from 'vs/workbench/contrib/scm/common/scmService';
+import { SCMViewService } from 'vs/workbench/contrib/scm/browser/scmViewService';
+import { IDebugService } from 'vs/workbench/contrib/debug/common/debug';
+import { DebugService } from 'vs/workbench/contrib/debug/browser/debugService';
+import { IOutputService } from 'vs/workbench/contrib/output/common/output';
+import { OutputService } from 'vs/workbench/contrib/output/browser/outputServices';
+import { ITerminalEditorService, ITerminalGroupService, ITerminalInstanceService, ITerminalService } from 'vs/workbench/contrib/terminal/browser/terminal';
+import { ITerminalProfileService } from 'vs/workbench/contrib/terminal/common/terminal';
+import { TerminalService } from 'vs/workbench/contrib/terminal/browser/terminalService';
+import { TerminalEditorService } from 'vs/workbench/contrib/terminal/browser/terminalEditorService';
+import { TerminalGroupService } from 'vs/workbench/contrib/terminal/browser/terminalGroupService';
+import { TerminalInstanceService } from 'vs/workbench/contrib/terminal/browser/terminalInstanceService';
+import { TerminalProfileService } from 'vs/workbench/contrib/terminal/browser/terminalProfileService';
+import { registerTerminalPlatformConfiguration } from 'vs/platform/terminal/common/terminalPlatformConfiguration';
+import { registerTerminalConfiguration } from 'vs/workbench/contrib/terminal/common/terminalConfiguration';
+
 //#region --- editor/workbench core
 
 import 'vs/editor/editor.all';
@@ -196,18 +220,21 @@ import 'vs/workbench/contrib/searchEditor/browser/searchEditor.contribution';
 import 'vs/workbench/contrib/sash/browser/sash.contribution';
 
 // SCM
-import 'vs/workbench/contrib/scm/browser/scm.contribution';
+registerSingleton(ISCMService, SCMService);
+registerSingleton(ISCMViewService, SCMViewService);
+// import 'vs/workbench/contrib/scm/browser/scm.contribution';
 
 // Debug
-import 'vs/workbench/contrib/debug/browser/debug.contribution';
-import 'vs/workbench/contrib/debug/browser/debugEditorContribution';
-import 'vs/workbench/contrib/debug/browser/breakpointEditorContribution';
-import 'vs/workbench/contrib/debug/browser/callStackEditorContribution';
-import 'vs/workbench/contrib/debug/browser/repl';
-import 'vs/workbench/contrib/debug/browser/debugViewlet';
+registerSingleton(IDebugService, DebugService, true);
+// import 'vs/workbench/contrib/debug/browser/debug.contribution';
+// import 'vs/workbench/contrib/debug/browser/debugEditorContribution';
+// import 'vs/workbench/contrib/debug/browser/breakpointEditorContribution';
+// import 'vs/workbench/contrib/debug/browser/callStackEditorContribution';
+// import 'vs/workbench/contrib/debug/browser/repl';
+// import 'vs/workbench/contrib/debug/browser/debugViewlet';
 
 // Markers
-import 'vs/workbench/contrib/markers/browser/markers.contribution';
+// import 'vs/workbench/contrib/markers/browser/markers.contribution';
 
 // Comments
 import 'vs/workbench/contrib/comments/browser/comments.contribution';
@@ -225,19 +252,30 @@ import 'vs/workbench/contrib/customEditor/browser/customEditor.contribution';
 import 'vs/workbench/contrib/externalUriOpener/common/externalUriOpener.contribution';
 
 // Extensions Management
-import 'vs/workbench/contrib/extensions/browser/extensions.contribution';
-import 'vs/workbench/contrib/extensions/browser/extensionsViewlet';
+registerSingleton(IExtensionsWorkbenchService, ExtensionsWorkbenchService);
+registerSingleton(IExtensionRecommendationNotificationService, ExtensionRecommendationNotificationService);
+registerSingleton(IExtensionRecommendationsService, ExtensionRecommendationsService);
+// import 'vs/workbench/contrib/extensions/browser/extensions.contribution';
+// import 'vs/workbench/contrib/extensions/browser/extensionsViewlet';
 
 // Output View
-import 'vs/workbench/contrib/output/browser/output.contribution';
-import 'vs/workbench/contrib/output/browser/outputView';
+registerSingleton(IOutputService, OutputService);
+// import 'vs/workbench/contrib/output/browser/output.contribution';
+// import 'vs/workbench/contrib/output/browser/outputView';
 
 // Terminal
 import 'vs/workbench/contrib/terminal/common/environmentVariable.contribution';
 import 'vs/workbench/contrib/terminal/common/terminalExtensionPoints.contribution';
-import 'vs/workbench/contrib/externalTerminal/browser/externalTerminal.contribution';
-import 'vs/workbench/contrib/terminal/browser/terminal.contribution';
-import 'vs/workbench/contrib/terminal/browser/terminalView';
+// import 'vs/workbench/contrib/externalTerminal/browser/externalTerminal.contribution';
+registerSingleton(ITerminalService, TerminalService, true);
+registerSingleton(ITerminalEditorService, TerminalEditorService, true);
+registerSingleton(ITerminalGroupService, TerminalGroupService, true);
+registerSingleton(ITerminalInstanceService, TerminalInstanceService, true);
+registerSingleton(ITerminalProfileService, TerminalProfileService, true);
+registerTerminalPlatformConfiguration();
+registerTerminalConfiguration();
+// import 'vs/workbench/contrib/terminal/browser/terminal.contribution';
+// import 'vs/workbench/contrib/terminal/browser/terminalView';
 
 // Relauncher
 import 'vs/workbench/contrib/relauncher/browser/relauncher.contribution';
@@ -246,8 +284,8 @@ import 'vs/workbench/contrib/relauncher/browser/relauncher.contribution';
 import 'vs/workbench/contrib/tasks/browser/task.contribution';
 
 // Remote
-import 'vs/workbench/contrib/remote/common/remote.contribution';
-import 'vs/workbench/contrib/remote/browser/remote.contribution';
+// import 'vs/workbench/contrib/remote/common/remote.contribution';
+// import 'vs/workbench/contrib/remote/browser/remote.contribution';
 
 // Emmet
 import 'vs/workbench/contrib/emmet/browser/emmet.contribution';

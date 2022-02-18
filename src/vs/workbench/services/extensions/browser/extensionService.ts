@@ -75,6 +75,7 @@ export class ExtensionService extends AbstractExtensionService implements IExten
 		this._runningLocation = new Map<string, ExtensionRunningLocation>();
 
 		// Initialize installed extensions first and do it only after workbench is ready
+		// 首先初始化已安装的扩展，只有在workbench准备就绪后才进行初始化
 		this._lifecycleService.when(LifecyclePhase.Ready).then(async () => {
 			await this._userDataInitializationService.initializeInstalledExtensions(this._instantiationService);
 			this._initialize();

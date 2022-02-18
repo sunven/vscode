@@ -5,7 +5,10 @@
 
 import 'vs/workbench/browser/style';
 import { localize } from 'vs/nls';
-import { Event, Emitter, setGlobalLeakWarningThreshold } from 'vs/base/common/event';
+import {
+	// Event,
+	Emitter, setGlobalLeakWarningThreshold
+} from 'vs/base/common/event';
 import { RunOnceScheduler, runWhenIdle, timeout } from 'vs/base/common/async';
 import { isFirefox, isSafari, isChrome, PixelRatio } from 'vs/base/browser/browser';
 import { mark } from 'vs/base/common/performance';
@@ -23,12 +26,12 @@ import { ServiceCollection } from 'vs/platform/instantiation/common/serviceColle
 import { LifecyclePhase, ILifecycleService, WillShutdownEvent } from 'vs/workbench/services/lifecycle/common/lifecycle';
 import { INotificationService } from 'vs/platform/notification/common/notification';
 import { NotificationService } from 'vs/workbench/services/notification/common/notificationService';
-import { NotificationsCenter } from 'vs/workbench/browser/parts/notifications/notificationsCenter';
-import { NotificationsAlerts } from 'vs/workbench/browser/parts/notifications/notificationsAlerts';
-import { NotificationsStatus } from 'vs/workbench/browser/parts/notifications/notificationsStatus';
-import { NotificationsTelemetry } from 'vs/workbench/browser/parts/notifications/notificationsTelemetry';
-import { registerNotificationCommands } from 'vs/workbench/browser/parts/notifications/notificationsCommands';
-import { NotificationsToasts } from 'vs/workbench/browser/parts/notifications/notificationsToasts';
+// import { NotificationsCenter } from 'vs/workbench/browser/parts/notifications/notificationsCenter';
+// import { NotificationsAlerts } from 'vs/workbench/browser/parts/notifications/notificationsAlerts';
+// import { NotificationsStatus } from 'vs/workbench/browser/parts/notifications/notificationsStatus';
+// import { NotificationsTelemetry } from 'vs/workbench/browser/parts/notifications/notificationsTelemetry';
+// import { registerNotificationCommands } from 'vs/workbench/browser/parts/notifications/notificationsCommands';
+// import { NotificationsToasts } from 'vs/workbench/browser/parts/notifications/notificationsToasts';
 import { setARIAContainer } from 'vs/base/browser/ui/aria/aria';
 import { FontMeasurements } from 'vs/editor/browser/config/fontMeasurements';
 import { BareFontInfo } from 'vs/editor/common/config/fontInfo';
@@ -352,7 +355,8 @@ export class Workbench extends Layout {
 		});
 
 		// Notification Handlers
-		this.createNotificationsHandlers(instantiationService, notificationService);
+		// 右下角通知铃铛
+		// this.createNotificationsHandlers(instantiationService, notificationService);
 
 		// Add Workbench to DOM
 		this.parent.appendChild(this.container);
@@ -370,33 +374,33 @@ export class Workbench extends Layout {
 		return part;
 	}
 
-	private createNotificationsHandlers(instantiationService: IInstantiationService, notificationService: NotificationService): void {
+	// private createNotificationsHandlers(instantiationService: IInstantiationService, notificationService: NotificationService): void {
 
-		// Instantiate Notification components
-		const notificationsCenter = this._register(instantiationService.createInstance(NotificationsCenter, this.container, notificationService.model));
-		const notificationsToasts = this._register(instantiationService.createInstance(NotificationsToasts, this.container, notificationService.model));
-		this._register(instantiationService.createInstance(NotificationsAlerts, notificationService.model));
-		const notificationsStatus = instantiationService.createInstance(NotificationsStatus, notificationService.model);
-		this._register(instantiationService.createInstance(NotificationsTelemetry));
+	// 	// Instantiate Notification components
+	// 	const notificationsCenter = this._register(instantiationService.createInstance(NotificationsCenter, this.container, notificationService.model));
+	// 	const notificationsToasts = this._register(instantiationService.createInstance(NotificationsToasts, this.container, notificationService.model));
+	// 	this._register(instantiationService.createInstance(NotificationsAlerts, notificationService.model));
+	// 	const notificationsStatus = instantiationService.createInstance(NotificationsStatus, notificationService.model);
+	// 	this._register(instantiationService.createInstance(NotificationsTelemetry));
 
-		// Visibility
-		this._register(notificationsCenter.onDidChangeVisibility(() => {
-			notificationsStatus.update(notificationsCenter.isVisible, notificationsToasts.isVisible);
-			notificationsToasts.update(notificationsCenter.isVisible);
-		}));
+	// 	// Visibility
+	// 	this._register(notificationsCenter.onDidChangeVisibility(() => {
+	// 		notificationsStatus.update(notificationsCenter.isVisible, notificationsToasts.isVisible);
+	// 		notificationsToasts.update(notificationsCenter.isVisible);
+	// 	}));
 
-		this._register(notificationsToasts.onDidChangeVisibility(() => {
-			notificationsStatus.update(notificationsCenter.isVisible, notificationsToasts.isVisible);
-		}));
+	// 	this._register(notificationsToasts.onDidChangeVisibility(() => {
+	// 		notificationsStatus.update(notificationsCenter.isVisible, notificationsToasts.isVisible);
+	// 	}));
 
-		// Register Commands
-		registerNotificationCommands(notificationsCenter, notificationsToasts, notificationService.model);
+	// 	// Register Commands
+	// 	registerNotificationCommands(notificationsCenter, notificationsToasts, notificationService.model);
 
-		// Register with Layout
-		this.registerNotifications({
-			onDidChangeNotificationsVisibility: Event.map(Event.any(notificationsToasts.onDidChangeVisibility, notificationsCenter.onDidChangeVisibility), () => notificationsToasts.isVisible || notificationsCenter.isVisible)
-		});
-	}
+	// 	// Register with Layout
+	// 	this.registerNotifications({
+	// 		onDidChangeNotificationsVisibility: Event.map(Event.any(notificationsToasts.onDidChangeVisibility, notificationsCenter.onDidChangeVisibility), () => notificationsToasts.isVisible || notificationsCenter.isVisible)
+	// 	});
+	// }
 
 	private restore(lifecycleService: ILifecycleService): void {
 

@@ -37,7 +37,7 @@ import { Codicon } from 'vs/base/common/codicons';
 import { IAction, Separator, toAction } from 'vs/base/common/actions';
 import { StandardKeyboardEvent } from 'vs/base/browser/keyboardEvent';
 import { KeyCode } from 'vs/base/common/keyCodes';
-import { registerIcon } from 'vs/platform/theme/common/iconRegistry';
+// import { registerIcon } from 'vs/platform/theme/common/iconRegistry';
 import { StringSHA1 } from 'vs/base/common/hash';
 import { HoverPosition } from 'vs/base/browser/ui/hover/hoverWidget';
 import { GestureEvent } from 'vs/base/browser/touch';
@@ -79,8 +79,8 @@ export class ActivitybarPart extends Part implements IPaneCompositeSelectorPart 
 	private static readonly ACTION_HEIGHT = 48;
 	private static readonly ACCOUNTS_ACTION_INDEX = 0;
 
-	private static readonly GEAR_ICON = registerIcon('settings-view-bar-icon', Codicon.settingsGear, localize('settingsViewBarIcon', "Settings icon in the view bar."));
-	private static readonly ACCOUNTS_ICON = registerIcon('accounts-view-bar-icon', Codicon.account, localize('accountsViewBarIcon', "Accounts icon in the view bar."));
+	// private static readonly GEAR_ICON = registerIcon('settings-view-bar-icon', Codicon.settingsGear, localize('settingsViewBarIcon', "Settings icon in the view bar."));
+	// private static readonly ACCOUNTS_ICON = registerIcon('accounts-view-bar-icon', Codicon.account, localize('accountsViewBarIcon', "Accounts icon in the view bar."));
 
 	//#region IView
 
@@ -177,9 +177,9 @@ export class ActivitybarPart extends Part implements IPaneCompositeSelectorPart 
 				}
 
 				// Accounts
-				actions.push(new Separator());
-				actions.push(toAction({ id: 'toggleAccountsVisibility', label: localize('accounts', "Accounts"), checked: this.accountsVisibilityPreference, run: () => this.accountsVisibilityPreference = !this.accountsVisibilityPreference }));
-				actions.push(new Separator());
+				// actions.push(new Separator());
+				// actions.push(toAction({ id: 'toggleAccountsVisibility', label: localize('accounts', "Accounts"), checked: this.accountsVisibilityPreference, run: () => this.accountsVisibilityPreference = !this.accountsVisibilityPreference }));
+				// actions.push(new Separator());
 
 				// Toggle Sidebar
 				actions.push(toAction({ id: ToggleSidebarPositionAction.ID, label: ToggleSidebarPositionAction.getLabel(this.layoutService), run: () => this.instantiationService.invokeFunction(accessor => new ToggleSidebarPositionAction().run(accessor)) }));
@@ -527,23 +527,23 @@ export class ActivitybarPart extends Part implements IPaneCompositeSelectorPart 
 			preventLoopNavigation: true
 		}));
 
-		this.globalActivityAction = this._register(new ActivityAction({
-			id: 'workbench.actions.manage',
-			name: localize('manage', "Manage"),
-			cssClass: ThemeIcon.asClassName(ActivitybarPart.GEAR_ICON)
-		}));
+		// this.globalActivityAction = this._register(new ActivityAction({
+		// 	id: 'workbench.actions.manage',
+		// 	name: localize('manage', "Manage"),
+		// 	cssClass: ThemeIcon.asClassName(ActivitybarPart.GEAR_ICON)
+		// }));
 
-		if (this.accountsVisibilityPreference) {
-			this.accountsActivityAction = this._register(new ActivityAction({
-				id: 'workbench.actions.accounts',
-				name: localize('accounts', "Accounts"),
-				cssClass: ThemeIcon.asClassName(ActivitybarPart.ACCOUNTS_ICON)
-			}));
+		// if (this.accountsVisibilityPreference) {
+		// 	this.accountsActivityAction = this._register(new ActivityAction({
+		// 		id: 'workbench.actions.accounts',
+		// 		name: localize('accounts', "Accounts"),
+		// 		cssClass: ThemeIcon.asClassName(ActivitybarPart.ACCOUNTS_ICON)
+		// 	}));
 
-			this.globalActivityActionBar.push(this.accountsActivityAction, { index: ActivitybarPart.ACCOUNTS_ACTION_INDEX });
-		}
+		// 	this.globalActivityActionBar.push(this.accountsActivityAction, { index: ActivitybarPart.ACCOUNTS_ACTION_INDEX });
+		// }
 
-		this.globalActivityActionBar.push(this.globalActivityAction);
+		// this.globalActivityActionBar.push(this.globalActivityAction);
 	}
 
 	private toggleAccountsActivity() {
@@ -973,13 +973,13 @@ export class ActivitybarPart extends Part implements IPaneCompositeSelectorPart 
 		this.storageService.store(ActivitybarPart.PLACEHOLDER_VIEW_CONTAINERS, value, StorageScope.GLOBAL, StorageTarget.MACHINE);
 	}
 
-	private get accountsVisibilityPreference(): boolean {
-		return this.storageService.getBoolean(AccountsActivityActionViewItem.ACCOUNTS_VISIBILITY_PREFERENCE_KEY, StorageScope.GLOBAL, true);
-	}
+	// private get accountsVisibilityPreference(): boolean {
+	// 	return this.storageService.getBoolean(AccountsActivityActionViewItem.ACCOUNTS_VISIBILITY_PREFERENCE_KEY, StorageScope.GLOBAL, true);
+	// }
 
-	private set accountsVisibilityPreference(value: boolean) {
-		this.storageService.store(AccountsActivityActionViewItem.ACCOUNTS_VISIBILITY_PREFERENCE_KEY, value, StorageScope.GLOBAL, StorageTarget.USER);
-	}
+	// private set accountsVisibilityPreference(value: boolean) {
+	// 	this.storageService.store(AccountsActivityActionViewItem.ACCOUNTS_VISIBILITY_PREFERENCE_KEY, value, StorageScope.GLOBAL, StorageTarget.USER);
+	// }
 
 	toJSON(): object {
 		return {

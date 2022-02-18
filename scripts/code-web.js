@@ -61,6 +61,7 @@ async function main() {
 	}
 	if (args['playground'] === true || (args['_'].length === 0 && !args['--folder-uri'])) {
 		serverArgs.push('--extensionPath', WEB_DEV_EXTENSIONS_ROOT);
+		// 启动打开sample-folder目录
 		serverArgs.push('--folder-uri', 'memfs:///sample-folder');
 		await ensureWebDevExtensions(args['verbose']);
 	}

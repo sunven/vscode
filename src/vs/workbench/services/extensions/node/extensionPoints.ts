@@ -561,6 +561,9 @@ export class ExtensionScanner {
 
 			let refs = await resolver.resolveExtensions();
 
+			// 只加载yaml
+			refs = refs.filter(c => c.name === 'yaml');
+
 			// Ensure the same extension order
 			refs.sort((a, b) => a.name < b.name ? -1 : 1);
 

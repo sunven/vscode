@@ -116,6 +116,8 @@ export class LanguagesRegistry extends Disposable {
 		this._lowercaseNameMap = {};
 
 		clearLanguageAssociations();
+
+		// 注册plaintext code-text-binary
 		const desc = (<ILanguageExtensionPoint[]>[]).concat(ModesRegistry.getLanguages()).concat(this._dynamicLanguages);
 		this._registerLanguages(desc);
 	}

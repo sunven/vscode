@@ -113,6 +113,7 @@ export class RemoteAgentEnvironmentChannel implements IServerChannel {
 			}
 
 			case 'scanExtensions': {
+				// web扫描扩展进这里
 				await this.whenExtensionsReady;
 				const args = <IScanExtensionsArguments>arg;
 				const language = args.language;
@@ -343,6 +344,7 @@ export class RemoteAgentEnvironmentChannel implements IServerChannel {
 
 	private async _scanExtensions(language: string, extensionDevelopmentPath?: string[]): Promise<IExtensionDescription[]> {
 		// Ensure that the language packs are available
+		// 确保语言包可用
 		const translations = await this._getTranslations(language);
 
 		const [builtinExtensions, installedExtensions, developedExtensions] = await Promise.all([
@@ -350,6 +352,7 @@ export class RemoteAgentEnvironmentChannel implements IServerChannel {
 			this._scanInstalledExtensions(language, translations),
 			this._scanDevelopedExtensions(language, translations, extensionDevelopmentPath)
 		]);
+
 
 		let result = new Map<string, IExtensionDescription>();
 
